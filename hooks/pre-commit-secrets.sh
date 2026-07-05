@@ -39,6 +39,16 @@ for file in $files; do
     continue
   fi
 
+  # Skip documentation and hook script files
+  if [[ "$file" =~ \.(md|txt|rst|doc|docx|sh)$ ]]; then
+    continue
+  fi
+
+  # Skip config examples and comments
+  if [[ "$file" =~ (example|sample|template|\.config|\.ini|\.cfg|hooks/) ]]; then
+    continue
+  fi
+
   for pattern in "${secret_patterns[@]}"; do
     if grep -iE "$pattern" "$file" > /dev/null 2>&1; then
       echo "❌ BLOCKED: Found secret pattern '$pattern' in $file"

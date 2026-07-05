@@ -4,7 +4,24 @@ Complete collection of pre-commit hooks for Python, SQL, dbt, YAML, and Snowflak
 
 ## Quick Start
 
-### 1. Install Hooks
+### Option 1: Install Globally (Recommended) ⭐
+
+Install hooks **once** for ALL repositories on your machine:
+
+```bash
+bash hooks/install-hooks-global.sh
+```
+
+This:
+- Creates `~/.git-hooks/` directory
+- Copies all hooks there
+- Configures git globally with `core.hooksPath`
+- Applies to every repository automatically
+- No per-repo installation needed!
+
+### Option 2: Install Locally (Per Repository)
+
+Install hooks **only** for this repository:
 
 ```bash
 bash hooks/install-hooks.sh
@@ -153,16 +170,62 @@ git lfs track "*.csv"
 
 ```
 hooks/
-├── pre-commit              # Main hook (orchestrates all checks)
-├── pre-commit-secrets.sh   # Secrets detection
-├── pre-commit-yaml.sh      # YAML validation
-├── pre-commit-python.sh    # Python linting
-├── pre-commit-sqlfluff.sh  # SQL linting
-├── pre-commit-dbt.sh       # dbt validation
-├── pre-commit-large-files.sh  # File size check
-├── install-hooks.sh        # Installation script
-└── README.md              # This file
+├── pre-commit                    # Main hook (orchestrates all checks)
+├── pre-commit-secrets.sh         # Secrets detection
+├── pre-commit-yaml.sh            # YAML validation
+├── pre-commit-python.sh          # Python linting
+├── pre-commit-sqlfluff.sh        # SQL linting
+├── pre-commit-dbt.sh             # dbt validation
+├── pre-commit-large-files.sh     # File size check
+├── install-hooks.sh              # Local installation (per-repo)
+├── install-hooks-global.sh       # Global installation (all repos)
+└── README.md                     # This file
 ```
+
+**Installation Scripts:**
+- `install-hooks.sh` — Installs to `.git/hooks/` (this repo only)
+- `install-hooks-global.sh` — Installs to `~/.git-hooks/` (all repos on machine)
+
+---
+
+## Global vs Local Installation
+
+### Global Installation (`install-hooks-global.sh`)
+
+**Best for:** Multiple repositories, consistent standards across all projects
+
+**What it does:**
+1. Creates `~/.git-hooks/` directory in your home folder
+2. Copies all hooks there
+3. Sets `git config --global core.hooksPath ~/.git-hooks`
+4. Git automatically uses these hooks in every repository
+
+**Benefits:**
+- ✅ Install once, use everywhere
+- ✅ Consistent standards across all projects
+- ✅ Automatic for all new repos you clone
+- ✅ Easy to update in one place
+- ✅ Shared by all team members on same machine
+
+**After installation:**
+```bash
+# Verify global config
+git config --global core.hooksPath
+# Output: /home/user/.git-hooks
+```
+
+### Local Installation (`install-hooks.sh`)
+
+**Best for:** Single repository, custom hooks, offline environments
+
+**What it does:**
+1. Copies hooks to `.git/hooks/` in this repository only
+2. Only applies to this repository
+
+**Benefits:**
+- ✅ Repository-specific customization
+- ✅ Hooks checked into version control
+- ✅ Works in cloned repositories
 
 ---
 
@@ -217,16 +280,105 @@ exclude = .git,__pycache__,.venv
 
 ---
 
+## Managing Global Hooks
+
+### View Global Config
+
+```bash
+# Check where global hooks are installed
+git config --global core.hooksPath
+
+# Should output: /home/user/.git-hooks (or equivalent)
+```
+
+### Update Global Hooks
+
+If you update the hooks in this repository, update the global installation:
+
+```bash
+bash hooks/install-hooks-global.sh
+```
+
+Optionally, just copy specific files:
+```bash
+cp hooks/pre-commit-secrets.sh ~/.git-hooks/
+chmod +x ~/.git-hooks/pre-commit-secrets.sh
+```
+
+### Disable Global Hooks Temporarily
+
+```bash
+# Temporarily disable
+git config --global --unset core.hooksPath
+
+# Re-enable
+git config --global core.hooksPath ~/.git-hooks
+```
+
+### Remove Global Hooks
+
+```bash
+# Remove the global hooks directory
+rm -rf ~/.git-hooks
+
+# Remove the git config
+git config --global --unset core.hooksPath
+```
+
+### Use Both Global and Local Hooks
+
+It's possible to have both:
+- Global hooks in `~/.git-hooks/` (for all repos)
+- Local hooks in `.git/hooks/` (for this repo only)
+
+Git will run both. Local hooks can override global behavior.
+
+---
+
 ## Troubleshooting
+
+### Verify Hooks Are Installed
+
+**For global hooks:**
+```bash
+# Check config
+git config --global core.hooksPath
+
+# Check directory
+ls -la ~/.git-hooks/
+```
+
+**For local hooks:**
+```bash
+# Check this repo
+ls -la .git/hooks/
+```
 
 ### Hooks not running?
 
 Check if they're executable:
+
+**Global:**
+```bash
+ls -la ~/.git-hooks/
+# Should show: -rwxr-xr-x (executable)
+```
+
+**Local:**
 ```bash
 ls -la .git/hooks/
+# Should show: -rwxr-xr-x (executable)
 ```
 
 Make executable:
+
+**Global:**
+```bash
+chmod +x ~/.git-hooks/pre-commit
+chmod +x ~/.git-hooks/pre-commit-*.sh
+```
+
+**Local:**
 ```bash
 chmod +x .git/hooks/pre-commit
 chmod +x .git/hooks/pre-commit-*.sh
@@ -292,11 +444,23 @@ pip install flake8 black sqlfluff dbt-snowflake
 
 ## Integration with CI/CD
 
-These hooks run locally before commit. For CI/CD pipelines, consider:
+**Note:** These hooks only run locally on developer machines. They do NOT run in CI/CD pipelines.
+
+For CI/CD pipelines, consider:
 
 1. **Running hooks in CI** — catch issues before they're pushed
+   - Use the same scripts in your CI pipeline
+   - Run before allowing merges to main
+
 2. **Enforcing branch rules** — require passing checks before merge
+   - GitHub/GitLab branch protection rules
+   - Require status checks to pass
+
 3. **Pre-commit framework** — `pip install pre-commit` for easier management
+   - Tracks which hook versions were used
+   - Shares configuration across team
+
+**Global hooks are for local development only.** Always enforce the same checks in CI/CD!
 
 ---
 
