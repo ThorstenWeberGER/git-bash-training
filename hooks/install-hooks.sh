@@ -31,7 +31,7 @@ echo "This script installs 6 pre-commit hooks to validate:"
 echo "  🔐 Secrets (passwords, API keys)"
 echo "  📋 YAML files (dbt configs)"
 echo "  🐍 Python code (flake8)"
-echo "  🔍 SQL files (sqlfluff + Snowflake)"
+echo "  🔍 SQL files (sqruff + Snowflake)"
 echo "  🎯 dbt models (parse validation)"
 echo "  📦 File sizes (prevent data bloat)"
 echo ""
@@ -60,30 +60,6 @@ echo "    ✅ Works when repo is cloned"
 echo ""
 echo "════════════════════════════════════════════════════════"
 echo ""
-
-# Get user input
-while true; do
-  read -p "Choose [1=Global, 2=Local, q=Quit]: " choice
-  case "$choice" in
-    1)
-      echo ""
-      install_global
-      break
-      ;;
-    2)
-      echo ""
-      install_local
-      break
-      ;;
-    q|Q)
-      echo "Installation cancelled."
-      exit 0
-      ;;
-    *)
-      echo "Invalid choice. Please enter 1, 2, or q"
-      ;;
-  esac
-done
 
 # GLOBAL INSTALLATION FUNCTION
 install_global() {
@@ -129,7 +105,7 @@ install_global() {
     "pre-commit-secrets.sh"
     "pre-commit-yaml.sh"
     "pre-commit-python.sh"
-    "pre-commit-sqlfluff.sh"
+    "pre-commit-sqruff.sh"
     "pre-commit-dbt.sh"
     "pre-commit-large-files.sh"
   )
@@ -197,7 +173,7 @@ install_global() {
     echo ""
     echo "Next steps:"
     echo "1. Install Python dependencies:"
-    echo "   pip install flake8 sqlfluff dbt-snowflake"
+    echo "   pip install flake8 sqruff dbt-snowflake"
     echo "2. Make a test commit to verify hooks run"
     echo ""
     exit 0
@@ -245,7 +221,7 @@ install_local() {
     "pre-commit-secrets.sh"
     "pre-commit-yaml.sh"
     "pre-commit-python.sh"
-    "pre-commit-sqlfluff.sh"
+    "pre-commit-sqruff.sh"
     "pre-commit-dbt.sh"
     "pre-commit-large-files.sh"
   )
@@ -302,7 +278,7 @@ install_local() {
     echo ""
     echo "Next steps:"
     echo "1. Install Python dependencies:"
-    echo "   pip install flake8 sqlfluff dbt-snowflake"
+    echo "   pip install flake8 sqruff dbt-snowflake"
     echo "2. Make a test commit to verify hooks run"
     echo ""
     exit 0
@@ -311,3 +287,27 @@ install_local() {
     exit 1
   fi
 }
+
+# Get user input
+while true; do
+  read -p "Choose [1=Global, 2=Local, q=Quit]: " choice
+  case "$choice" in
+    1)
+      echo ""
+      install_global
+      break
+      ;;
+    2)
+      echo ""
+      install_local
+      break
+      ;;
+    q|Q)
+      echo "Installation cancelled."
+      exit 0
+      ;;
+    *)
+      echo "Invalid choice. Please enter 1, 2, or q"
+      ;;
+  esac
+done

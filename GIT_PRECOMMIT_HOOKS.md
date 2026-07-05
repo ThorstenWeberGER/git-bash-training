@@ -492,6 +492,35 @@ SELECT
 FROM table
 ```
 
+**Faster alternative — sqruff:**
+
+sqlfluff is Python-based and can be slow on large repos. [sqruff](https://github.com/quarylabs/sqruff) is a Rust reimplementation of sqlfluff that aims for rule/config compatibility, supports the Jinja2 templater, and includes a Snowflake dialect — often 10-40x faster for linting and formatting. It's a drop-in replacement worth trying if pre-commit hook speed becomes a pain point.
+
+**Install (pick one):**
+```bash
+# pip (prebuilt wheel, no Rust toolchain needed)
+pip install sqruff
+
+# pipx (isolated install, recommended if you don't want it in your main env)
+pipx install sqruff
+
+# cargo (if you have Rust installed)
+cargo install sqruff
+```
+
+Note: unlike sqlfluff, sqruff has **no `--dialect` CLI flag**. The dialect is set via a `.sqruff` config file in the repo root:
+```ini
+[sqruff]
+dialect = snowflake
+templater = jinja
+```
+
+```bash
+# Usage (dialect comes from .sqruff)
+sqruff lint models/
+sqruff fix models/
+```
+
 **Pre-commit hook for sqlfluff:**
 ```bash
 #!/usr/bin/env bash

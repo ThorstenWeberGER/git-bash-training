@@ -1,0 +1,3 @@
+[sqruff]
+dialect = snowflake
+templater = jinja

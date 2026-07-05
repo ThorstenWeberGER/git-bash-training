@@ -26,7 +26,7 @@ The script will ask you to choose:
 
 After installation, install dependencies:
 ```bash
-pip install flake8 sqlfluff dbt-snowflake
+pip install flake8 sqruff dbt-snowflake
 ```
 
 Test the hooks:
@@ -44,7 +44,7 @@ python3 --version
 pip install flake8 black pylint
 
 # SQL linting
-pip install sqlfluff
+pip install sqruff
 
 # dbt validation
 pip install dbt-snowflake
@@ -110,9 +110,9 @@ black models/  # Auto-format
 
 ---
 
-### 🔍 SQL Linting (`pre-commit-sqlfluff.sh`)
+### 🔍 SQL Linting (`pre-commit-sqruff.sh`)
 
-**Tool:** sqlfluff with Snowflake dialect
+**Tool:** sqruff with Snowflake dialect
 
 **Checks:**
 - SQL syntax errors
@@ -124,7 +124,7 @@ black models/  # Auto-format
 
 **Auto-fix with:**
 ```bash
-sqlfluff fix models/ --dialect snowflake
+sqruff fix models/
 ```
 
 ---
@@ -179,7 +179,7 @@ hooks/
 ├── pre-commit-secrets.sh        # Secrets detection
 ├── pre-commit-yaml.sh           # YAML validation
 ├── pre-commit-python.sh         # Python linting
-├── pre-commit-sqlfluff.sh       # SQL linting
+├── pre-commit-sqruff.sh         # SQL linting
 ├── pre-commit-dbt.sh            # dbt validation
 ├── pre-commit-large-files.sh    # File size check
 ├── install-hooks.sh             # Interactive installer (global or local)
@@ -258,18 +258,14 @@ Edit `.git/hooks/pre-commit` and comment out hooks you don't need:
 # )
 ```
 
-### Configure sqlfluff
+### Configure sqruff
 
-Create `.sqlfluff` in repo root:
+Create `.sqruff` in repo root:
 
 ```ini
-[sqlfluff]
+[sqruff]
 dialect = snowflake
-max_line_length = 100
-
-[sqlfluff:rules]
-L003 = false  # Disable indentation if too strict
-L009 = false  # Disable keyword case
+templater = jinja
 ```
 
 ### Configure flake8
@@ -420,13 +416,13 @@ git diff --cached --name-only
 | Secrets | - | Built-in |
 | YAML | Python 3.x | `python3 --version` |
 | Python | flake8 | `pip install flake8` |
-| SQL | sqlfluff | `pip install sqlfluff` |
+| SQL | sqruff | `pip install sqruff` |
 | dbt | dbt-snowflake | `pip install dbt-snowflake` |
 | Large Files | - | Built-in |
 
 All in one:
 ```bash
-pip install flake8 black sqlfluff dbt-snowflake
+pip install flake8 black sqruff dbt-snowflake
 ```
 
 ---

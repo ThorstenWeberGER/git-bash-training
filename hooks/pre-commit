@@ -6,7 +6,7 @@
 # 1. Secrets Detection
 # 2. YAML Validation
 # 3. Python Linting
-# 4. SQL Linting (sqlfluff)
+# 4. SQL Linting (sqruff)
 # 5. dbt Parse Validation
 # 6. Large File Prevention
 
@@ -33,7 +33,7 @@ hooks=(
   "pre-commit-secrets.sh"
   "pre-commit-yaml.sh"
   "pre-commit-python.sh"
-  "pre-commit-sqlfluff.sh"
+  "pre-commit-sqruff.sh"
   "pre-commit-dbt.sh"
   "pre-commit-large-files.sh"
 )
