@@ -1,0 +1,6 @@
+{
+  "defaultShell": "bash",
+  "env": {
+    "BASH_PATH": "C:\\Program Files\\Git\\usr\\bin\\bash.exe"
+  }
+}
