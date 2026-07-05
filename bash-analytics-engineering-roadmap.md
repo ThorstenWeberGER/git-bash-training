@@ -41,6 +41,79 @@ Phase 8: Production Deployment
 
 ---
 
+## ⚠️ Important: Line Endings (LF vs CRLF)
+
+**Windows users: Read this first!**
+
+Bash scripts need **LF** (Unix) line endings, but Windows uses **CRLF** line endings. This can cause subtle bugs.
+
+### What are line endings?
+
+| Type | Name | Used on | What it is |
+|------|------|---------|-----------|
+| **LF** | Line Feed | Linux/Mac/Unix | Just `\n` |
+| **CRLF** | Carriage Return + Line Feed | Windows | `\r\n` |
+
+### Why it matters
+
+If your bash scripts have CRLF line endings, you'll see errors like:
+```
+/usr/bin/bash^M: bad interpreter: No such file or directory
+```
+
+That `^M` is the carriage return character causing problems.
+
+### Fix: Configure Git
+
+Run this once in your repository:
+
+```bash
+git config core.safecrlf false
+```
+
+Or better, create a `.gitattributes` file to enforce LF for bash scripts:
+
+```bash
+# Create .gitattributes
+cat > .gitattributes << 'EOF'
+* text=auto
+*.sh text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.csv text eol=lf
+EOF
+
+# Add and commit it
+git add .gitattributes
+git commit -m "Add gitattributes to preserve LF line endings"
+```
+
+### Check your current line endings
+
+```bash
+# Shows the file with line endings visible
+cat -A your_script.sh
+# Lines ending with $ = LF (correct)
+# Lines ending with ^M$ = CRLF (wrong)
+```
+
+### Convert existing files to LF
+
+```bash
+# Using dos2unix (if installed)
+dos2unix script.sh
+
+# Using sed on Windows Git Bash
+sed -i 's/\r$//' script.sh
+
+# Using tr on any bash
+tr -d '\r' < script.sh > script.sh.tmp && mv script.sh.tmp script.sh
+```
+
+**Going forward:** Always commit with LF, and Git will handle the conversion automatically. ✅
+
+---
+
 ## 🚀 Fast-Track: Bash for Your Actual Stack (8 Focused Sessions)
 
 **Goal:** Skip the general tour and go straight for what you need to read/write bash confidently in `github-actions`, deployment scripts, and Lambda tooling — built around GitHub Actions CI/CD, AWS Lambda, Snowflake CLI, and dbt.

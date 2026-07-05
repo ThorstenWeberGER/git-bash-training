@@ -1,3 +1,4 @@
+# ensures that all text files are normalized to use LF line endings in the repository, while allowing for automatic handling of line endings based on the operating system.
 * text=auto
 *.sh text eol=lf
 *.md text eol=lf
