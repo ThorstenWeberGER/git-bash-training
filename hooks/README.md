@@ -4,30 +4,35 @@ Complete collection of pre-commit hooks for Python, SQL, dbt, YAML, and Snowflak
 
 ## Quick Start
 
-### Option 1: Install Globally (Recommended) ⭐
+### Installation (Interactive)
 
-Install hooks **once** for ALL repositories on your machine:
-
-```bash
-bash hooks/install-hooks-global.sh
-```
-
-This:
-- Creates `~/.git-hooks/` directory
-- Copies all hooks there
-- Configures git globally with `core.hooksPath`
-- Applies to every repository automatically
-- No per-repo installation needed!
-
-### Option 2: Install Locally (Per Repository)
-
-Install hooks **only** for this repository:
+Run the installer and choose your preferred mode:
 
 ```bash
 bash hooks/install-hooks.sh
 ```
 
-This copies all hooks from `hooks/` to `.git/hooks/` and makes them executable.
+The script will ask you to choose:
+
+**Option 1: GLOBAL** (Recommended) ⭐
+- Install once, use in ALL repositories
+- Location: `~/.git-hooks/`
+- Perfect for multiple projects
+
+**Option 2: LOCAL**
+- Install only for this repository
+- Location: `.git/hooks/`
+- For per-repo customization
+
+After installation, install dependencies:
+```bash
+pip install flake8 sqlfluff dbt-snowflake
+```
+
+Test the hooks:
+```bash
+git commit --allow-empty -m "test"
+```
 
 ### 2. Install Dependencies
 
@@ -170,21 +175,21 @@ git lfs track "*.csv"
 
 ```
 hooks/
-├── pre-commit                    # Main hook (orchestrates all checks)
-├── pre-commit-secrets.sh         # Secrets detection
-├── pre-commit-yaml.sh            # YAML validation
-├── pre-commit-python.sh          # Python linting
-├── pre-commit-sqlfluff.sh        # SQL linting
-├── pre-commit-dbt.sh             # dbt validation
-├── pre-commit-large-files.sh     # File size check
-├── install-hooks.sh              # Local installation (per-repo)
-├── install-hooks-global.sh       # Global installation (all repos)
-└── README.md                     # This file
+├── pre-commit                   # Main hook (orchestrates all checks)
+├── pre-commit-secrets.sh        # Secrets detection
+├── pre-commit-yaml.sh           # YAML validation
+├── pre-commit-python.sh         # Python linting
+├── pre-commit-sqlfluff.sh       # SQL linting
+├── pre-commit-dbt.sh            # dbt validation
+├── pre-commit-large-files.sh    # File size check
+├── install-hooks.sh             # Interactive installer (global or local)
+└── README.md                    # This file
 ```
 
-**Installation Scripts:**
-- `install-hooks.sh` — Installs to `.git/hooks/` (this repo only)
-- `install-hooks-global.sh` — Installs to `~/.git-hooks/` (all repos on machine)
+**Installation:**
+- `install-hooks.sh` — Interactive script that asks you to choose:
+  - Global install (`~/.git-hooks/` — all repos)
+  - Local install (`.git/hooks/` — this repo only)
 
 ---
 
