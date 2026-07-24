@@ -195,7 +195,7 @@ hooks/
 
 ## Global vs Local Installation
 
-### Global Installation (`install-hooks-global.sh`)
+### Global Installation (`install-hooks.sh`, option 1)
 
 **Best for:** Multiple repositories, consistent standards across all projects
 
@@ -297,7 +297,7 @@ git config --global core.hooksPath
 If you update the hooks in this repository, update the global installation:
 
 ```bash
-bash hooks/install-hooks-global.sh
+bash hooks/install-hooks.sh   # choose option 1 (Global)
 ```
 
 Optionally, just copy specific files:

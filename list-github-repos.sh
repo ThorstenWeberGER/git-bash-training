@@ -4,6 +4,7 @@ set -euo pipefail
 # This script lists all GitHub repositories for the authenticated user, including those they own, collaborate on, or are a member of through an organization. It uses the GitHub API and requires a personal access token for authentication.
 
 # The personal access token should be stored in a file named `.secrets/github.env` in the same directory as this script, with the following format
+# GITHUB_TOKEN=ghp_xxxxxxxxxxxx
 SECRETS_FILE="$(dirname "$0")/.secrets/github.env"
 if [ -f "$SECRETS_FILE" ]; then
   # Load the GITHUB_TOKEN from the .secrets/github.env file
@@ -12,7 +13,7 @@ if [ -f "$SECRETS_FILE" ]; then
 fi
 
 # Check if the GITHUB_TOKEN environment variable is set, either from the .secrets/github.env file or exported in the shell
-TOKEN="${token:?Set 'token' in .secrets/github.env or export GITHUB_TOKEN}"
+TOKEN="${GITHUB_TOKEN:?Set GITHUB_TOKEN in .secrets/github.env or export GITHUB_TOKEN}"
 
 # List all repositories for the authenticated user. The API returns paginated responses, so we collect all pages into an array.
 PAGE=1
@@ -59,9 +60,9 @@ done
 CSV_FILE="repo_names.csv"
 # create header
 echo "name,url" > "$CSV_FILE"
-# add repo names and URLs to CSV file
+# add repo names and URLs to CSV file (fields quoted in case a repo name contains a comma)
 for response in "${ALL_RESPONSES[@]}"; do
-  echo "$response" | jq -r '.[] | "\(.name),\(.html_url)"' >> "$CSV_FILE"
+  echo "$response" | jq -r '.[] | "\"\(.name)\",\"\(.html_url)\""' >> "$CSV_FILE"
 done
 
 # Display the first few lines of the CSV file and the total number of lines

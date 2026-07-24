@@ -1,3 +1,6 @@
 .env/
 .secrets/
 # .claude/settings.local.json
+
+# generated output from list-github-repos.sh
+repo_names.csv
