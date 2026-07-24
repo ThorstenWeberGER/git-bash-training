@@ -41,14 +41,14 @@ This isn't theoretical bash. Every exercise is grounded in **real analytics engi
 
 | Phase | Topic | What You'll Do |
 |-------|-------|---|
-| **0** | Script Execution Fundamentals | Create, make executable, and run bash scripts safely |
-| **1** | Bash Fundamentals for Data Work | Navigate files, process text, pipe commands, handle data formats |
-| **2** | Variables, Arrays, & Control Flow | Write dynamic scripts with loops, conditionals, and data structures |
-| **3** | Data Transformation & Cleansing | Clean messy data, validate quality, convert formats |
-| **4** | Data Aggregation & Analytics | Group data, calculate statistics, analyze trends |
-| **5** | ETL Automation | Build production pipelines with error handling and logging |
-| **6** | Advanced Data Engineering | Extract from APIs/databases, build validation frameworks |
-| **7** | GitHub Actions & CI/CD | Automate everything—scheduled jobs, validation, deployment |
+| **1** | Script Execution Fundamentals | Create, make executable, and run bash scripts safely |
+| **2** | Bash Fundamentals for Data Work | Navigate files, process text, pipe commands, handle data formats |
+| **3** | Variables, Arrays, & Control Flow | Write dynamic scripts with loops, conditionals, and data structures |
+| **4** | Data Transformation & Cleansing | Clean messy data, validate quality, convert formats |
+| **5** | Data Aggregation & Analytics | Group data, calculate statistics, analyze trends |
+| **6** | ETL Automation | Build production pipelines with error handling and logging |
+| **7** | Advanced Data Engineering | Extract from APIs/databases, build validation frameworks |
+| **8** | GitHub Actions & CI/CD | Automate everything—scheduled jobs, validation, deployment |
 
 ## 💡 Real Skills You'll Gain
 
@@ -76,26 +76,26 @@ This isn't theoretical bash. Every exercise is grounded in **real analytics engi
 Each phase builds on the previous—you don't jump to "GitHub Actions" without understanding variables and loops first.
 
 ```
-Phase 0: Foundations
+Phase 1: Foundations
    ↓
-Phase 1: Core Commands
+Phase 2: Core Commands
    ↓
-Phase 2: Programming Logic (NEW!)
+Phase 3: Programming Logic (NEW!)
    ↓
-Phase 3-4: Data Analysis
+Phase 4-5: Data Analysis
    ↓
-Phase 5: Automation
+Phase 6: Automation
    ↓
-Phase 6: Advanced Integration
+Phase 7: Advanced Integration
    ↓
-Phase 7: Production Deployment
+Phase 8: Production Deployment
 ```
 
 No jumping around. Master one phase, move to the next.
 
 ## 📚 How to Use This Repository
 
-### 1. **Start with Phase 0**
+### 1. **Start with Phase 1**
 ```bash
 # Understand how to create and run scripts
 chmod +x script.sh
@@ -118,18 +118,18 @@ This repo is pre-configured for Git Bash on Windows:
 ### 4. **Run Exercises Locally**
 All exercises are designed to run on your machine:
 ```bash
-# Phase 1: Process CSV files
+# Phase 2: Process CSV files
 tail -n +2 customers.csv | cut -d',' -f2,3
 
-# Phase 2: Write scripts with loops
+# Phase 3: Write scripts with loops
 for product in "${products[@]}"; do
   echo "Processing: $product"
 done
 
-# Phase 5: Build ETL pipelines
+# Phase 6: Build ETL pipelines
 bash scripts/etl_pipeline.sh
 
-# Phase 7: Automate with GitHub Actions
+# Phase 8: Automate with GitHub Actions
 git push  # Triggers your workflow
 ```
 
@@ -195,9 +195,9 @@ Deploy only if all checks pass
 - Text editor (VS Code, Sublime, etc.)
 
 **Optional (for advanced phases):**
-- `jq` - JSON processing (Phase 6)
-- SQLite - Database practice (Phase 6)
-- GitHub account - CI/CD workflows (Phase 7)
+- `jq` - JSON processing (Phase 7)
+- SQLite - Database practice (Phase 7)
+- GitHub account - CI/CD workflows (Phase 8)
 
 **Platform Support:**
 - ✅ Windows (Git Bash)
@@ -208,22 +208,21 @@ Deploy only if all checks pass
 ## 📖 Repository Structure
 
 ```
-bash_training/
-├── README.md (you are here)
+git-bash-training/
+├── readme.md (you are here)
 ├── .claude/
 │   └── settings.json (Git Bash configuration)
 ├── bash-analytics-engineering-roadmap.md (complete training guide)
-├── scripts/
-│   ├── etl_pipeline.sh
-│   ├── validate_data.sh
-│   └── ... (exercise solutions)
-├── data/
-│   ├── raw/ (sample input data)
-│   └── processed/ (transformed outputs)
-└── .github/workflows/
-    ├── validate-data.yml
-    ├── daily-etl.yml
-    └── ... (GitHub Actions examples)
+├── GIT_PRECOMMIT_HOOKS.md (pre-commit hooks reference guide)
+├── echo_names.sh, read_variables.sh (example exercise scripts)
+├── list-github-repos.sh (example exercise script: GitHub API + CSV export)
+├── list_names.txt, list_names.csv (sample input data)
+├── .sqruff (sqruff SQL linter config, used by hooks/pre-commit-sqruff.sh)
+└── hooks/
+    ├── pre-commit (main hook, orchestrates all checks)
+    ├── pre-commit-*.sh (secrets, yaml, python, sqruff, dbt, large-files checks)
+    ├── install-hooks.sh (interactive installer: global or local)
+    └── README.md
 ```
 
 ## 🚦 Getting Started (5 minutes)
@@ -250,7 +249,7 @@ bash --version
 cat bash-analytics-engineering-roadmap.md
 ```
 
-### 4. Start Phase 0
+### 4. Start Phase 1
 ```bash
 # Create your first script
 cat > hello.sh << 'EOF'
@@ -266,31 +265,31 @@ chmod +x hello.sh
 # Output: Hello from bash!
 ```
 
-### 5. Move to Phase 1
+### 5. Move to Phase 2
 Continue with the exercises in `bash-analytics-engineering-roadmap.md`
 
 ## 💻 Typical Weekly Progress
 
-**Week 1:** Phase 0-1 (Foundations)
+**Week 1:** Phase 1-2 (Foundations)
 - Running scripts, navigating files, basic text processing
 - Confidence: ⭐⭐
 
-**Week 2:** Phase 2 (Programming)
+**Week 2:** Phase 3 (Programming)
 - Variables, loops, conditionals
 - Can now write real scripts with logic
 - Confidence: ⭐⭐⭐
 
-**Week 3:** Phase 3-4 (Data Work)
+**Week 3:** Phase 4-5 (Data Work)
 - Processing CSV/JSON, aggregations
 - Solving real analytics problems with bash
 - Confidence: ⭐⭐⭐⭐
 
-**Week 4-5:** Phase 5-6 (Automation)
+**Week 4-5:** Phase 6-7 (Automation)
 - Building complete ETL pipelines
 - Error handling, logging, validation
 - Confidence: ⭐⭐⭐⭐
 
-**Week 6:** Phase 7 (Deployment)
+**Week 6:** Phase 8 (Deployment)
 - GitHub Actions, scheduled jobs
 - Automating your real work
 - Confidence: ⭐⭐⭐⭐⭐
@@ -298,7 +297,7 @@ Continue with the exercises in `bash-analytics-engineering-roadmap.md`
 ## ❓ FAQ
 
 **Q: Do I need to know bash already?**
-A: No. Phase 0 teaches you the basics. Start there.
+A: No. Phase 1 teaches you the basics. Start there.
 
 **Q: Can I use PowerShell instead?**
 A: Bash is better for data work and required for this course. Git Bash makes it work on Windows.
@@ -318,9 +317,9 @@ A: Every exercise has a complete solution. Compare your attempt to the solution.
 ## 🎯 Next Steps
 
 1. **Read this README** - ✅ You're doing it now
-2. **Read Phase 0** - Understand script execution
-3. **Do Phase 1 exercises** - Get comfortable with bash
-4. **Start Phase 2** - Write actual programs
+2. **Read Phase 1** - Understand script execution
+3. **Do Phase 2 exercises** - Get comfortable with bash
+4. **Start Phase 3** - Write actual programs
 5. **Build something real** - Apply to your job
 6. **Share & iterate** - Improve your scripts over time
 
@@ -347,6 +346,6 @@ Bash is the **difference between:**
 ❌ Scattered Excel workflows and manual steps  
 ✅ Reproducible, version-controlled pipelines
 
-**Start with Phase 0. In 6 weeks, you'll be building production-ready data pipelines.**
+**Start with Phase 1. In 6 weeks, you'll be building production-ready data pipelines.**
 
 Happy learning! 🚀

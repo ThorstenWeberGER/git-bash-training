@@ -1,8 +1,9 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
 
 ask_name() {
     echo "What is your name?"
-    read name
+    read -r name
     echo "Hello, $name!"
 }
 
@@ -19,7 +20,7 @@ mapfile -t liste < list_names.txt
 # function iterating over array
 do_iterate() {
         for item in "${liste[@]}"; do
-          echo $item
+          echo "$item"
         done
 }
 
